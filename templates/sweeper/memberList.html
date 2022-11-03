@@ -1,0 +1,27 @@
+<div class="container" id="memberContainer">
+	<div class="row">
+		{% for member in members %}
+			<div class="col-sm-4 col-md-3 my-auto">
+				{% if usergroup.admin and group.founder != member.user and user != member.user %}
+					<button type="button" class="marginBtn btn btn-block {% if group.founder == member.user %}btn-danger{% elif not member.accepted %}btn-success{% elif member.admin %}btn-primary{% else %}btn-secondary{% endif %}" onclick="openAdminUserModal(
+					{{ user.id }},
+					{{ group.founder.id }},
+					{{ member.user.id }},
+					'{{ member.admin }}',
+					'{{ member.accepted }}'
+					)">
+						<h4>{{ member.user.username }}</h4>
+					</button>	
+				{% else %}
+					<h4 class="{% if group.founder == member.user %}text-danger{% elif not member.accepted %}text-success{% elif member.admin %}text-primary{% else %}text-secondary{% endif %}">
+						{{ member.user.username }}
+					</h4>
+				{% endif %}
+			</div>
+		{% empty %}
+			<div class="col-12">
+				<h5>No members yet!</h5>
+			</div>
+		{% endfor %}
+	</div>
+</div>

@@ -1,0 +1,51 @@
+{% extends "sweeper/base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block head %}
+
+<script>
+
+	gGroupCreateUrl = "{% url 'sweeper:createGroup' %}";
+	gInvitationUrl = "{% url 'sweeper:invitation' %}";
+
+</script>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+	<div class="col-sm-4">
+		<div class="card bg-light">
+			<h1 class="card-header">Hi, {{ user.get_username }}</h1>
+			<div class="card-body">
+				{% include "sweeper/groupList.html" %}
+
+				<div class="card mb-3">
+					<h2 class="card-header">Create group</h2>
+
+					<div class="card-body">
+						<div class="form-group">
+							<input type="text" class="form-control" id="createGroupName" value="" placeholder="Group name">
+						</div>
+
+						<div class="form-group">
+							<button type="button" class="btn btn-primary btn-block" onclick="createGroup()">Create</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<br>
+		<hr class="d-sm-none">
+	</div>
+	<div class="col-sm-8">
+		{% include "sweeper/eventList.html" %}
+		<br>
+		<hr class="d-sm-none">
+	</div>
+</div>
+
+{% endblock %}

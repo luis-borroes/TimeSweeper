@@ -1,0 +1,33 @@
+<div class="card bg-light">
+	<h1 class="card-header">Meeting list</h1>
+	<div class="card-body">
+		{% for meeting in meetings %}
+			<div class="card mb-3">
+				<div class="card-body">
+					<h5 class="card-title">{{ meeting.group.name }}</h5>
+					<h6 class="card-subtitle mb-2 text-muted">{{ meeting.obj.title }}</h6>
+					<p class="card-text">
+						{{ meeting.timeFormat.dateA }} - {{ meeting.timeFormat.dateB }}
+						<br>
+						{{ meeting.timeFormat.timeA }} - {{ meeting.timeFormat.timeB }}
+					</p>
+					<div class="card-subtitle mb-2">
+						<h5>Users going</h5>
+					</div>
+					<div class="container border rounded" id="goingContainer">
+						<div class="row text-center" id="goingRow">
+							{% for groupMember in meeting.goingMembers %}
+								<div class="col-sm-4 my-auto">
+									<h6>{{ groupMember.username }}</h6>
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+					<a href="{% url 'sweeper:group' meeting.group.id %}" class="card-link">View group</a>
+				</div>
+			</div>
+		{% empty %}
+			<h5>No meetings yet!</h5>
+		{% endfor %}
+	</div>
+</div>

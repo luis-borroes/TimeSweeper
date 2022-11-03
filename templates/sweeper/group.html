@@ -1,0 +1,136 @@
+{% extends "sweeper/base.html" %}
+
+{% block title %}{{ group.name }}{% endblock %}
+
+{% block head %}
+
+{% load static %}
+
+<link href="{% static 'sweeper/calendar/core/main.css' %}" rel='stylesheet' />
+<link href="{% static 'sweeper/calendar/daygrid/main.css' %}" rel='stylesheet' />
+<link href="{% static 'sweeper/calendar/timegrid/main.css' %}" rel='stylesheet' />
+<link href="{% static 'sweeper/calendar/list/main.css' %}" rel='stylesheet' />
+<script src="{% static 'sweeper/calendar/core/main.js' %}"></script>
+<script src="{% static 'sweeper/calendar/interaction/main.js' %}"></script>
+<script src="{% static 'sweeper/calendar/daygrid/main.js' %}"></script>
+<script src="{% static 'sweeper/calendar/timegrid/main.js' %}"></script>
+<script src="{% static 'sweeper/calendar/list/main.js' %}"></script>
+
+<script>
+
+	var evts = [
+
+		{% for interval in blockedDates %}
+			{
+				title: '',
+				start: '{{ interval.start }}',
+				end: '{{ interval.end }}',
+				editable: false,
+				evType: 'static',
+				rendering: 'background',
+				color: 'blue'
+			},
+		{% endfor %}
+
+		{% for interval in meetingDates %}
+			{
+				title: '{{ interval.title }}',
+				start: '{{ interval.start }}',
+				end: '{{ interval.end }}',
+				color: '{{ interval.color }}',
+				going: '{{ interval.going }}',
+				location: '{{ interval.location }}',
+				notes: '{{ interval.notes }}',
+				lock: '{{ interval.lock }}',
+				goingMembers: {{ interval.goingMembers|safe }}
+			},
+		{% endfor %}
+
+	];
+
+
+	gAddUrl = "{% url 'sweeper:groupAdd' groupID %}";
+	gRemUrl = "{% url 'sweeper:groupRemove' groupID %}";
+	gAtMeetingUrl = "{% url 'sweeper:atMeeting' groupID %}";
+	gMembershipUrl = "{% url 'sweeper:groupMembership' groupID %}";
+	gUserAdminUrl = "{% url 'sweeper:adminUser' groupID %}";
+
+	gIsAdmin = "{{ usergroup.admin }}";
+
+
+	buildCalender(GROUP_TABLE, "{{ date }}", evts);
+
+</script>
+
+{% endblock %}
+
+
+{% block content %}
+
+{% include "sweeper/meetingModal.html" %}
+{% include "sweeper/leaveGroupModal.html" %}
+{% include "sweeper/adminUserModal.html" %}
+
+
+<div class="form-group row border rounded">
+	<div class="col-sm-4 my-auto text-center">
+		<h1>{{ group.name }}{% if group.founder == user %} (founder){% elif usergroup.admin %} (admin){% endif %}</h1>
+	</div>
+
+	{% if usergroup.admin %}
+		<div class="col-sm-4 my-auto">
+			<input type="text" class="form-control" id="addUsername" value="" placeholder="Username">
+		</div>
+		
+		<div class="col-sm-2 my-auto">
+			<button type="button" class="btn btn-primary btn-block" onclick="addUsername()">Invite</button>
+		</div>
+	{% else %}
+		<div class="col-sm-6 my-auto">
+		</div>
+	{% endif %}
+
+	<div class="col-sm-2 my-auto">
+		<button type="button" class="btn btn-warning btn-block" onclick="openLeaveModal()">Leave group</button>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-sm-12 unpaddedCol">
+		<div class="card bg-light">
+			<div class="card-header">
+				<div class="container">
+					<div class="row">
+						<div class="col my-auto text-center">
+							<h3>Member list</h3>
+						</div>
+						<div class="col-sm-auto my-auto text-center">
+							<h6>
+								<span class="badge badge-pill badge-danger">Founder</span>
+								<span class="badge badge-pill badge-primary">Admin</span>
+								<span class="badge badge-pill badge-secondary">Regular</span>
+								<span class="badge badge-pill badge-success">Invited</span>
+							</h6>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="card-body text-center">
+				{% include "sweeper/memberList.html" %}
+			</div>
+		</div>
+	</div>
+</div>
+
+<br>
+
+<div class="row border rounded">
+	<div class="col-sm-12">
+		<br>
+		<div id='calendar'></div>
+		<br>
+	</div>
+</div>
+
+{% endblock %}

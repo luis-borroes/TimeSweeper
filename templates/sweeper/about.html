@@ -1,0 +1,59 @@
+{% extends "sweeper/base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block head %}
+
+<script>
+
+	gGroupCreateUrl = "{% url 'sweeper:createGroup' %}";
+	gInvitationUrl = "{% url 'sweeper:invitation' %}";
+
+</script>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+	<div class="col-sm-12 unpaddedCol">
+		<div class="card bg-light">
+			<h1 class="card-header">About Time Sweeper</h1>
+			<div class="card-body">
+				<h5 class="card-title">What is Time Sweeper?</h5>
+				<p class="card-text">
+					Time Sweeper is a web app that allows you to set regular weekly meetings with a group of people. The app takes into account each person's personal timetable to display all the possible intervals where the whole group is free to meet.
+				</p>
+				<h5 class="card-title">How does it do that?</h5>
+				<p class="card-text">
+					The app takes all the personal timetable intervals (called activities) from everyone in the group AND all the meetings accepted by users in this group (across their own groups) and merges them into a new set of intervals which are then displayed. This ensures your own timetable is as private as possible.
+				</p>
+				<h5 class="card-title">How do I use it?</h5>
+				<p class="card-text">
+					Once registered, you can edit your own timetable by drawing new events or editing/resizing/moving already created ones, and giving them a title. You can also create groups, or accept invitations to them.
+				</p>
+				<p class="card-text">
+					There are 4 roles in groups:
+					<ul>
+						<li class="text-danger">Founder - can't be kicked and can give admin permissions, invite and kick people and edit admin-locked meetings. There's only one per group.</li>
+						<li class="text-primary">Admin - can invite and kick people and edit admin-locked meetings.</li>
+						<li class="text-secondary">Regular - can only edit regular meetings.</li>
+						<li class="text-success">Invitee - hasn't accepted the group invitation yet, can only see the group's timetable once he has acepted (and vice versa).</li>
+					</ul>
+				</p>
+				<p class="card-text">
+					Once in a group, you can create and edit meetings, adding a title, location and other notes. You can also declare whether you're going to a meeting or not. If you are, the meeting changes color, shows up on your personal timetable and home page, and is added to the "blocked" time intervals on your other groups' timetables - this prevents you from accepting conflicting meetings.
+				</p>
+				<h5 class="card-title">Why was it made?</h5>
+				<p class="card-text">
+					This project was the subject of my third year dissertation for my CS BSc at the University of Liverpool. The original idea came to me due to having a hard time booking weekly practices with my band, since we did not know each other's weekly schedules.
+				</p>
+			</div>
+		</div>
+
+		<br>
+		<hr class="d-sm-none">
+	</div>
+</div>
+
+{% endblock %}

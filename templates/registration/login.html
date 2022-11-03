@@ -1,0 +1,55 @@
+{% extends "sweeper/base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+<div class="col-sm-12">
+	<div class="login-form">
+		{% block message %}
+
+			{% if form.errors %}
+				<p>Your username and password didn't match. Please try again.</p>
+			{% endif %}
+			
+			{% if next %}
+				{% if user.is_authenticated %}
+					<p>Your account doesn't have access to this page. To proceed,
+					please login with an account that has access.</p>
+				{% else %}
+					<p>Please login to see this page.</p>
+				{% endif %}
+			{% endif %}
+
+			<p>Usernames are case-sensitive.</p>
+
+		{% endblock %}
+
+		<form method="post" action="{% url 'main:login' %}">
+			{% csrf_token %}
+
+			<h2 class="text-center">Log in</h2>
+
+			<div class="form-group">
+				<input type="text" name="username" autofocus required id="id_username" autocomplete="off" class="form-control" placeholder="Username" >
+			</div>
+
+			<div class="form-group">
+				<input type="password" name="password" required id="id_password" autocomplete="off" class="form-control" placeholder="Password" >
+			</div>
+
+			<div class="form-group">
+				<button type="submit" value="login" class="btn btn-primary btn-block">Log in</button>
+			</div>
+
+			<div class="clearfix">
+				<label class="pull-left checkbox-inline"><input type="checkbox" name="remember"> Remember me</label>
+			</div>
+
+			<input type="hidden" name="next" value="{{ next }}" />
+		</form>
+		<p class="text-center"><a href="{% url 'main:register' %}">Create an account</a></p>
+	</div>
+</div>
+
+{% endblock %}

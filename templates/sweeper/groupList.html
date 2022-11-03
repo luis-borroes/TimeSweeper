@@ -1,0 +1,40 @@
+<div class="card mb-3">
+	<h2 class="card-header">Groups</h2>
+	<div class="card-body">
+		<p class="card-text">
+			<ul class="nav nav-pills flex-column">
+			{% for group in groups %}
+				<li class="nav-item">
+					<a class="nav-link btn btn-primary marginBtn" href="{% url 'sweeper:group' group.id %}"><h3>{{ group.name }}</h3></a>
+				</li>
+			{% empty %}
+				<li>
+					<h5>No groups yet!</h5>
+				</li>
+			{% endfor %}
+			</ul>
+		</p>
+	</div>
+</div>
+
+<div class="card mb-3">
+	<h2 class="card-header">Invites</h2>
+	<div class="card-body">
+		<p class="card-text">
+			<ul class="nav nav-pills flex-column">
+			{% for invite in invites %}
+				<li class="nav-item">
+					<div class="btn-group btn-block">
+						<button type="button" class="btn btn-success btn-block marginBtn" onclick="acceptGroup({{ invite.id }})"><h3>{{ invite.name }}</h3></button>
+						<button type="button" class="btn btn-danger marginBtn" onclick="denyGroup({{ invite.id }})"><h3>X</h3></button></h3></button>
+					</div>
+				</li>
+			{% empty %}
+				<li>
+					<h5>No invites yet!</h5>
+				</li>
+			{% endfor %}
+			</ul>
+		</p>
+	</div>
+</div>

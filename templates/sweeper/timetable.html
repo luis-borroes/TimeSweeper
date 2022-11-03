@@ -1,0 +1,77 @@
+{% extends "sweeper/base.html" %}
+
+{% block title %}Timetable{% endblock %}
+
+{% block head %}
+
+{% load static %}
+
+<link href="{% static 'sweeper/calendar/core/main.css' %}" rel='stylesheet' />
+<link href="{% static 'sweeper/calendar/daygrid/main.css' %}" rel='stylesheet' />
+<link href="{% static 'sweeper/calendar/timegrid/main.css' %}" rel='stylesheet' />
+<link href="{% static 'sweeper/calendar/list/main.css' %}" rel='stylesheet' />
+<script src="{% static 'sweeper/calendar/core/main.js' %}"></script>
+<script src="{% static 'sweeper/calendar/interaction/main.js' %}"></script>
+<script src="{% static 'sweeper/calendar/daygrid/main.js' %}"></script>
+<script src="{% static 'sweeper/calendar/timegrid/main.js' %}"></script>
+<script src="{% static 'sweeper/calendar/list/main.js' %}"></script>
+
+<script>
+
+	var evts = [
+
+		{% for interval in meetingDates %}
+			{
+				title: '{{ interval.group }}\n\n{{ interval.title }}',
+				start: '{{ interval.start }}',
+				end: '{{ interval.end }}',
+				editable: false,
+				evType: 'redirect',
+				redirect: '{{ interval.redirect }}',
+				color: 'lightgreen'
+			},
+		{% endfor %}
+
+		{% for interval in activityDates %}
+			{
+				title: '{{ interval.title }}',
+				start: '{{ interval.start }}',
+				end: '{{ interval.end }}'
+			},
+		{% endfor %}
+
+	];
+
+
+	gAddUrl = "{% url 'sweeper:add' %}";
+	gRemUrl = "{% url 'sweeper:remove' %}";
+
+
+	buildCalender(USER_TABLE, "{{ date }}", evts);
+
+</script>
+
+{% endblock %}
+
+
+{% block content %}
+
+{% include "sweeper/activityModal.html" %}
+
+<div class="form-group row border rounded">
+	<div class="col-sm-12 my-auto text-center">
+		<h1>Edit your timetable</h1>
+	</div>
+</div>
+
+<br>
+
+<div class="row border rounded">
+	<div class="col-sm-12">
+		<br>
+		<div id='calendar'></div>
+		<br>
+	</div>
+</div>
+
+{% endblock %}

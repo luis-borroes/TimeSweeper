@@ -1,0 +1,56 @@
+{% extends "sweeper/base.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+
+<div class="col-sm-12">
+	<div class="login-form">
+		<form method="post">
+			{% csrf_token %}
+
+			{{ form.id }}
+
+			<h2 class="text-center">Register</h2>
+
+			<div class="form-group">
+				<input type="text" name="username" autofocus maxlength="150" required id="id_username" autocomplete="off" class="form-control" placeholder="Username" value="{{ form.username.data|default_if_none:"" }}">
+				<small id="usernameHelp" class="form-text text-muted">{{ form.username.help_text }}</small>
+
+				{% for error in form.username.errors %}
+					<div class="invalid-feedback d-block">
+						{{ error }}
+					</div>
+				{% endfor %}
+			</div>
+
+			<div class="form-group">
+				<input type="password" name="password1" required id="id_password1" autocomplete="off" class="form-control" placeholder="Password" value="{{ form.password1.data|default_if_none:"" }}">
+				<small id="password1Help" class="form-text text-muted">{{ form.password1.help_text }}</small>
+
+				{% for error in form.password1.errors %}
+					<div class="invalid-feedback d-block">
+						{{ error }}
+					</div>
+				{% endfor %}
+			</div>
+
+			<div class="form-group">
+				<input type="password" name="password2" required id="id_password2" autocomplete="off" class="form-control" placeholder="Password" value="{{ form.password2.data|default_if_none:"" }}">
+				<small id="password1Help" class="form-text text-muted">{{ form.password2.help_text }}</small>
+
+				{% for error in form.password2.errors %}
+					<div class="invalid-feedback d-block">
+						{{ error }}
+					</div>
+				{% endfor %}
+			</div>
+
+			<div class="form-group">
+				<button type="submit" value="regiser" class="btn btn-primary btn-block">Register</button>
+			</div>
+		</form>
+	</div>
+</div>
+
+{% endblock %}

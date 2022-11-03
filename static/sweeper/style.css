@@ -1,0 +1,28 @@
+.jumbotron {
+  background-size: cover;
+  border-radius: 0 !important;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 160px; /* Margin bottom by footer height */
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 160px; /* Set the fixed height of the footer here */
+}
+
+.marginBtn {
+	margin-bottom: 10px;
+}
+
+.unpaddedCol {
+  padding: 0px;
+}
